@@ -20,7 +20,7 @@ public class BankAccountService {
 	private static long accId = 000000000L;
 	private static HashMap<Long,BankAccount> bankAcc = new HashMap<Long,BankAccount>();
 
-	@GET
+	@POST
     @Path("/openAcc")
 	public  BankResponse createNewBankAccount() {		
 		BankResponse xmlResponse = new BankResponseImpl();
