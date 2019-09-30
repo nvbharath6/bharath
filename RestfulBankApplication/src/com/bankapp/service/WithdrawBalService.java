@@ -3,6 +3,7 @@ package com.bankapp.service;
 import java.util.Date;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -13,13 +14,13 @@ import com.bankapp.model.BankAccount;
 import com.bankapp.model.BankResponse;
 import com.bankapp.model.BankResponseImpl;
 
-@Path(value="/bank/withdraw")
+@Path(value="/withdraw")
 @Consumes(MediaType.APPLICATION_XML)
 @Produces(MediaType.APPLICATION_XML)
 public class WithdrawBalService {
 	  
-    @PUT
-    @Path("/{accid}/{amt}/")
+	@GET
+    @Path("{accid}/{amt}/")
     public BankResponse withdrawBal(@PathParam("accid") long id,@PathParam("amt") double amount) {
         
     	BankResponse xmlResponse = new BankResponseImpl();
