@@ -2,6 +2,7 @@ package com.bankapp.service;
 
 import java.util.Date;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -12,12 +13,12 @@ import com.bankapp.model.BankAccount;
 import com.bankapp.model.BankResponse;
 import com.bankapp.model.BankResponseImpl;
 
-@Path(value="/bank/transferbal")
+@Path(value="/transferbal")
 @Consumes(MediaType.APPLICATION_XML)
 @Produces(MediaType.APPLICATION_XML)
 public class TransferBalService {
 	    
-	    @PUT
+        @GET
 	    @Path("/from/{accid1}/{amt1}/to/{accid2}/")
 	    public BankResponse transferBalance(@PathParam("accid1") long id1,@PathParam("amt1") double amount1,@PathParam("accid2") long id2) {
 	        
@@ -31,10 +32,17 @@ public class TransferBalService {
 	            	
 	            	if(bankAcc1.getAmount() > amount1){
 	            		double newBalance = bankAcc2.getAmount() + amount1;
+	            		
 		                bankAcc2.setAmount(newBalance);
 		                bankAcc2.setTransactDate(new Date());
-		                boolean commitStatus = BankAccountService.commit(bankAcc2);
-		                if(commitStatus){
+		                
+		                bankAcc1.setAmount(bankAcc1.getAmount() - amount1);
+		                bankAcc1.setTransactDate(new Date());
+		                boolean commitStatus1 = BankAccountService.commit(bankAcc1);
+		                boolean commitStatus2 = BankAccountService.commit(bankAcc2);
+		                
+		                if(commitStatus1 && commitStatus2){
+ 
 			                xmlResponse.setStatus(true);
 			                xmlResponse.setMessage("Amount of $"+amount1+"sucessfully Transferred from"+id1+" into the Bank Account:"+id2);
 		                }
