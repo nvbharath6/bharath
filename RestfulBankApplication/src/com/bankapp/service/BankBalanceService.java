@@ -11,13 +11,13 @@ import com.bankapp.model.BankAccount;
 import com.bankapp.model.BankResponse;
 import com.bankapp.model.BankResponseImpl;
 
-@Path(value="/bank")
+@Path(value="/checkbalance")
 @Consumes(MediaType.APPLICATION_XML)
 @Produces(MediaType.APPLICATION_XML)
 public class BankBalanceService {
 	
 	    @GET
-	    @Path("/{accid}/getBal")
+	    @Path("/{accid}")
 	    public BankResponse getBalance(@PathParam("accid") long id) {
 	        
 	        BankResponse xmlResponse = new BankResponseImpl();
